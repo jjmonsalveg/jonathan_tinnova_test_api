@@ -25,3 +25,7 @@
 # Ignore idea files
 .idea
 /.idea
+.ruby-gemset
+.env.development.local
+.rspec
+/coverage/
