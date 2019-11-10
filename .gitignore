@@ -27,3 +27,5 @@
 /.idea
 .ruby-gemset
 .env.development.local
+.rspec
+/coverage/
