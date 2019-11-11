@@ -108,4 +108,77 @@ RSpec.describe BeersController, type: :controller do
       end
     end
   end
+
+  describe 'POST /beers/:id/favorite' do
+      context 'when beet exists' do
+
+        context 'valid token' do
+          let(:beer_id) { create(:beer).id }
+
+          before do
+            request.headers.merge!(valid_headers)
+            get :favorite, params: { id: beer_id }
+          end
+
+          it 'returns status code 200' do
+            expect(response).to have_http_status(200)
+          end
+
+          it 'returns the item' do
+            expect(parsed_response['id']).to eq(beer_id)
+          end
+        end
+
+        context 'invalid token' do
+          it 'raise exception' do
+            expect { get :favorite, params: { id: 1 } }.to raise_error(NoMethodError)
+          end
+        end
+      end
+
+      context 'when beer not exists' do
+
+        context 'valid token' do
+          before do
+            request.headers.merge!(valid_headers)
+            get :favorite, params: { id: 1 }
+          end
+
+          it 'returns status code 404' do
+            expect(response).to have_http_status(:not_found)
+          end
+
+          it 'returns a not found message' do
+            expect(response.body).to match(/Couldn't find Beer/)
+          end
+        end
+
+        context 'invalid token' do
+          it 'raise exception' do
+            expect { get :show, params: { id: 1 } }.to raise_error(NoMethodError)
+          end
+        end
+      end
+
+      describe 'seen_at ' do
+        let(:beer) { create(:beer) }
+
+        before do
+          request.headers.merge!(valid_headers)
+        end
+
+        context 'without previously visit' do
+          it { expect { get :favorite, params: { id: beer.id } }.to change { BeerUser.count }.by(1) }
+          it { expect { get :favorite, params: { id: beer.id } }.to change { BeerUser.last&.favorite }.from(nil).to(true) }
+        end
+
+        context 'previously visit' do
+          let!(:beer_user) { create(:beer_user, user: current_user, beer: beer) }
+          it { expect { get :favorite, params: { id: beer.id } }.not_to change { BeerUser.count } }
+          it { expect { get :favorite, params: { id: beer.id } }.to change { beer_user.reload.seen_at } }
+          it { expect { get :favorite, params: { id: beer.id } }.to change { BeerUser.last.favorite }.from(false).to(true) }
+        end
+      end
+  end
+
 end

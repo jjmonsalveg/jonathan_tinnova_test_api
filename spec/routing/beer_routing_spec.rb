@@ -9,6 +9,12 @@ RSpec.describe 'Routes for Beers', type: :routing do
     expect(:get => "/beers/1").to route_to(controller: 'beers' , action: 'show', id: '1')
   end
 
+  it 'favorite'do
+    expect(:post => "/beers/1/favorite").to route_to(controller: 'beers' , action: 'favorite', id: '1')
+  end
+
+
+
   it 'should not have [create show destroy] routes' do
     expect(post: '/beers').to_not be_routable
     expect(delete: '/beers/1').to_not be_routable
