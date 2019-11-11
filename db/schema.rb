@@ -10,10 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_07_004824) do
+ActiveRecord::Schema.define(version: 2019_11_11_135156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "beer_users", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "beer_id", null: false
+    t.date "date", null: false
+    t.time "time", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "favorite", default: false
+    t.index ["beer_id"], name: "index_beer_users_on_beer_id"
+    t.index ["user_id", "beer_id"], name: "index_beer_users_on_user_id_and_beer_id", unique: true
+    t.index ["user_id"], name: "index_beer_users_on_user_id"
+  end
+
+  create_table "beers", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "tagline"
+    t.string "description"
+    t.float "abv", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["abv", "name"], name: "index_beers_on_abv_and_name"
+    t.index ["abv"], name: "index_beers_on_abv"
+    t.index ["name"], name: "index_beers_on_name", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -27,4 +52,6 @@ ActiveRecord::Schema.define(version: 2019_02_07_004824) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "beer_users", "beers"
+  add_foreign_key "beer_users", "users"
 end

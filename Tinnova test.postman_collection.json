@@ -1,0 +1,295 @@
+{
+	"info": {
+		"_postman_id": "bd8529ce-8166-4974-b88b-619d80b81f7c",
+		"name": "Tinnova test",
+		"description": "This collection is only for test purposes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "sessions",
+			"item": [
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "36212b88-c300-480b-a6b0-c03f40c48b63",
+								"exec": [
+									"pm.test(\"Content-Type is present\", function () {",
+									"  pm.response.to.have.header(\"Content-Type\");",
+									"  var data = pm.response.json();",
+									"  pm.environment.set(\"token\", data.token);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "username",
+								"value": "{{username}}",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "password",
+								"value": "{{password}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \n \"user\": \n   {\n  \t \"username\": \"{{username}}\",\n \t \"password\": \"{{password}}\"\n   }\n  \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "this POST action permmit create new session for end user "
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "beers",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/beers",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"beers"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "AVa",
+									"disabled": true
+								},
+								{
+									"key": "abv",
+									"value": "6.3",
+									"disabled": true
+								},
+								{
+									"key": "favorite",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						},
+						"description": "This request return a beer collection"
+					},
+					"response": []
+				},
+				{
+					"name": "favorites",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/beers/favorites",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"beers",
+								"favorites"
+							]
+						},
+						"description": "This request return a beer collection"
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/beers/11",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"beers",
+								"11"
+							]
+						},
+						"description": "this endpoint show a beer by id if this exist"
+					},
+					"response": []
+				},
+				{
+					"name": "favorite",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/beers/11/favorite",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"beers",
+								"11",
+								"favorite"
+							]
+						},
+						"description": "this endpoint mark a beer like favorite if this exist"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "external PUNK API",
+			"item": [
+				{
+					"name": "All beers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.punkapi.com/v2/beers?per_page=80&page=5",
+							"protocol": "https",
+							"host": [
+								"api",
+								"punkapi",
+								"com"
+							],
+							"path": [
+								"v2",
+								"beers"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "80"
+								},
+								{
+									"key": "page",
+									"value": "5"
+								}
+							]
+						},
+						"description": "this request fetch all beers without filters"
+					},
+					"response": []
+				},
+				{
+					"name": "Beers filters by name and abv",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.punkapi.com/v2/beers?name=buzz",
+							"protocol": "https",
+							"host": [
+								"api",
+								"punkapi",
+								"com"
+							],
+							"path": [
+								"v2",
+								"beers"
+							],
+							"query": [
+								{
+									"key": "abv_gt",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "buzz"
+								}
+							]
+						},
+						"description": "this request show us the filters name and abv"
+					},
+					"response": []
+				}
+			],
+			"description": "this folder resume a bunch of request to PUNK API",
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"protocolProfileBehavior": {}
+}

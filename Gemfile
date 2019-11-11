@@ -37,10 +37,23 @@ gem 'jwt'
 # Use Active Model Serializers
 gem 'active_model_serializers', '~> 0.10.0'
 
+# bulk insert
+gem 'activerecord-import'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'dotenv-rails', '2.7.5'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+
+  # A library for generating fake data
+  gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+
+  # framework for test
+  gem 'rspec-rails'
+
+  # generate factories for test
+  gem 'factory_bot_rails', '5.1.1'
 end
 
 group :development do
@@ -48,8 +61,17 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  # allows to automatically&intelligently launch specs when files are modified
+  gem 'guard-rspec','4.7.3', require: false
 end
 
+group :test do
+  # code coverage
+  gem 'simplecov', require: false
+  # custom validators
+  gem 'shoulda-matchers', '4.1.2'
+end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
