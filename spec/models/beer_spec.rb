@@ -6,6 +6,8 @@ RSpec.describe Beer, type: :model do
   it { is_expected.to validate_presence_of :abv }
   it { is_expected.to validate_presence_of :name }
   it { is_expected.to validate_uniqueness_of :name }
+  it { is_expected.to have_many(:beer_users) }
+  it { is_expected.to have_many(:users) }
 
   describe  '.like_name' do
     let(:canadian_beer) { create(:beer, name: 'Canadian') }

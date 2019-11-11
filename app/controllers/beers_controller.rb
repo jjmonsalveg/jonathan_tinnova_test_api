@@ -8,6 +8,7 @@ class BeersController < ApplicationController
 
   def show
     if @beer
+      BeerUser.find_or_create_by(user_id: current_user.id, beer_id: @beer.id )
       render json: @beer, status: 200
     else
       render json: { error: 'Couldn\'t find Beer' }, status: :not_found

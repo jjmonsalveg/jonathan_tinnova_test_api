@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_11_065657) do
+ActiveRecord::Schema.define(version: 2019_11_11_111324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "beer_users", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "beer_id", null: false
+    t.date "date"
+    t.time "time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["beer_id"], name: "index_beer_users_on_beer_id"
+    t.index ["user_id", "beer_id"], name: "index_beer_users_on_user_id_and_beer_id", unique: true
+    t.index ["user_id"], name: "index_beer_users_on_user_id"
+  end
 
   create_table "beers", force: :cascade do |t|
     t.string "name", null: false
@@ -39,4 +51,6 @@ ActiveRecord::Schema.define(version: 2019_11_11_065657) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "beer_users", "beers"
+  add_foreign_key "beer_users", "users"
 end
