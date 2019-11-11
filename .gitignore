@@ -30,4 +30,3 @@
 .rspec
 /coverage/
 /.env.test.local
-/spec/controllers/beers_controller_spec.rb
