@@ -142,3 +142,9 @@ Postman file import:
 ./Tinnova test.postman_collection.json
 ```
  
+ Postman environments files import:
+ 
+```
+tinnova_development admin user.postman_environment.json
+tinnova_development  user N.postman_environment.json
+```
