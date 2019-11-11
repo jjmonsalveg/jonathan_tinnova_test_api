@@ -6,22 +6,28 @@ RSpec.describe BeersQuery do
 
     context 'without params' do
       let(:beers) { create_list(:beer, 10)}
-      it 'return all' do
-        expect(described_class.call({})).to match beers
-      end
 
+      it 'return all' do
+        expect(described_class.call({})).to match(beers)
+      end
     end
 
     context 'with  params' do
-      context 'with name' do
+      let(:canadian_beer) { create(:beer, name: 'Canadian') }
+      let(:extranger_beer) { create(:beer, name: 'extranger') }
+      let(:target_beer) { create(:beer, name: 'Polar') }
+      let(:target_beer_2) { create(:beer, name: 'Polarcita') }
+      let(:target_beers) { [target_beer, target_beer_2] }
+
+      it 'with name' do
+        expect(described_class.call(name: 'pol')).to contain_exactly(*target_beers)
+      end
+
+      it 'with abv' do
 
       end
 
-      context 'with abv' do
-
-      end
-
-      context 'both' do
+      it 'both' do
 
       end
     end
