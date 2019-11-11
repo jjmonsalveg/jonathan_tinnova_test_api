@@ -24,4 +24,4 @@ User.create(name: 'Admin',
   )
 end
 
-puts '===============Created users seeds=================='
+puts '=============Created users seeds=================='

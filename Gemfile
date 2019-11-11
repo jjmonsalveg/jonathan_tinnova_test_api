@@ -40,7 +40,7 @@ gem 'active_model_serializers', '~> 0.10.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'dotenv-rails'
+  gem 'dotenv-rails', '2.7.5'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
   # A library for generating fake data
@@ -54,16 +54,18 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   # allows to automatically&intelligently launch specs when files are modified
-  gem 'guard-rspec', require: false
+  gem 'guard-rspec','4.7.3', require: false
 end
 
 group :test do
   # framework for test
   gem 'rspec-rails'
   # generate factories for test
-  gem 'factory_bot_rails'
-  # Code coverage
+  gem 'factory_bot_rails', '5.1.1'
+  # code coverage
   gem 'simplecov', require: false
+  # custom validators
+  gem 'shoulda-matchers', '4.1.2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

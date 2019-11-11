@@ -189,6 +189,8 @@ GEM
     rspec-support (3.9.0)
     ruby_dep (1.5.0)
     shellany (0.0.1)
+    shoulda-matchers (4.1.2)
+      activesupport (>= 4.2.0)
     simplecov (0.17.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -221,11 +223,11 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.1.0)
   byebug
-  dotenv-rails
-  factory_bot_rails
+  dotenv-rails (= 2.7.5)
+  factory_bot_rails (= 5.1.1)
   faker!
   faraday
-  guard-rspec
+  guard-rspec (= 4.7.3)
   jwt
   listen (>= 3.0.5, < 3.2)
   pg (>= 0.18, < 2.0)
@@ -233,6 +235,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 5.2.2)
   rspec-rails
+  shoulda-matchers (= 4.1.2)
   simplecov
   spring
   spring-watcher-listen (~> 2.0.0)
