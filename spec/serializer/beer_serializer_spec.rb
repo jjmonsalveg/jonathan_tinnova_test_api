@@ -13,6 +13,7 @@ describe BeerSerializer, type: :serializer do
                                           tagline
                                           description
                                           abv
+                                          seen_at
                                         ])
   end
 end
