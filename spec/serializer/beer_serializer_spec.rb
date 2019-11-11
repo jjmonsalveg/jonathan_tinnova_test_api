@@ -14,6 +14,7 @@ describe BeerSerializer, type: :serializer do
                                           description
                                           abv
                                           seen_at
+                                          favorite
                                         ])
   end
 end
