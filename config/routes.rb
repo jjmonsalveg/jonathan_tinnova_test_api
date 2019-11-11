@@ -4,5 +4,6 @@ Rails.application.routes.draw do
 
   resources :beers, only: %i[index show] do
     post :favorite, on: :member
+    get :favorites, on: :collection
   end
 end

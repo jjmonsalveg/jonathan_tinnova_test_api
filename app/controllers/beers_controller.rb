@@ -14,6 +14,10 @@ class BeersController < ApplicationController
     process_beer(current_time_params.merge(favorite: true))
   end
 
+  def favorites
+    render json: BeersQuery.call(params).where(beer_users: {user: current_user}), current_user: current_user
+  end
+
   private
 
   def current_time_params
