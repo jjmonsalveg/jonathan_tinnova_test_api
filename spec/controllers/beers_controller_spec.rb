@@ -104,6 +104,7 @@ RSpec.describe BeersController, type: :controller do
       context 'previously visit' do
         let!(:beer_user) { create(:beer_user, user: current_user, beer: beer) }
         it { expect { get :show, params: { id: beer.id } }.not_to change { BeerUser.count } }
+        it { expect { get :show, params: { id: beer.id } }.to change { beer_user.reload.seen_at } }
       end
     end
   end

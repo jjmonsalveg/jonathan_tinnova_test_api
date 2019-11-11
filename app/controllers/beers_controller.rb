@@ -3,13 +3,14 @@ class BeersController < ApplicationController
   before_action :set_beer, only: :show
 
   def index
-    render json: BeersQuery.call(params)
+    render json: BeersQuery.call(params), current_user: current_user
   end
 
   def show
     if @beer
       BeerUser.find_or_create_by(user_id: current_user.id, beer_id: @beer.id )
-      render json: @beer, status: 200
+              .update_attributes(date: Date.current, time: Time.current )
+      render json: @beer, current_user: current_user, status: 200
     else
       render json: { error: 'Couldn\'t find Beer' }, status: :not_found
     end

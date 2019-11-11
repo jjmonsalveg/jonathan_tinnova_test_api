@@ -4,12 +4,7 @@ class BeerUser < ApplicationRecord
 
   validates_presence_of :date, :time
 
-  after_initialize :set_date_and_time
-
-  private
-
-  def set_date_and_time
-    self.date = Date.current
-    self.time = Time.current
+  def seen_at
+    DateTime.new(date.year, date.month, date.day, time.hour, time.min, time.sec)
   end
 end
