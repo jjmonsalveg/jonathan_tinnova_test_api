@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe BeersController, type: :controller do
 
   let(:current_user) { FactoryBot.create(:user) }
-  let(:headers) { {'Authorization' => token_generator(user.to_token)} }
-  let(:invalid_headers) { {'Authorization' => nil} }
+  let(:headers) { {'Authorization': token_generator(user.to_token)} }
+  let(:invalid_headers) { {'Authorization': nil} }
 
   describe 'GET index' do
     context 'valid token' do
@@ -34,9 +34,60 @@ RSpec.describe BeersController, type: :controller do
       end
 
       it 'raise exception' do
-        expect{ get :index }.to raise_error(NoMethodError)
+        expect { get :index }.to raise_error(NoMethodError)
       end
     end
   end
 
+  describe 'GET show beers/:id' do
+    context 'when beet exists' do
+
+      context 'valid token' do
+        let(:beer_id) { create(:beer).id}
+
+        before do
+          request.headers.merge!(valid_headers)
+          get :show, params: { id: beer_id}
+        end
+
+        it 'returns status code 200' do
+          expect(response).to have_http_status(200)
+        end
+
+        it 'returns the item' do
+          expect(parsed_response['id']).to eq(beer_id)
+        end
+      end
+
+      context 'invalid token' do
+        it 'raise exception' do
+          expect {get :show, params: { id: 1 } }.to raise_error(NoMethodError)
+        end
+      end
+    end
+
+    context 'when beer not exists' do
+
+      context 'valid token' do
+        before do
+          request.headers.merge!(valid_headers)
+          get :show, params: { id: 1}
+        end
+
+        it 'returns status code 404' do
+          expect(response).to have_http_status(:not_found)
+        end
+
+        it 'returns a not found message' do
+          expect(response.body).to match(/Couldn't find Beer/)
+        end
+      end
+
+      context 'invalid token' do
+        it 'raise exception' do
+          expect {get :show, params: { id: 1 } }.to raise_error(NoMethodError)
+        end
+      end
+    end
+  end
 end
