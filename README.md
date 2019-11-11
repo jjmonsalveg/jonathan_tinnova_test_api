@@ -113,3 +113,32 @@ Run the projects
 ```
 rails s
 ```
+
+Run test (Rspec)
+```
+rails rspec
+```
+
+DotEnv:  For your environment variables you need two files
+- .env.development.local (desarrollo)
+- .env.test.local        (test)
+
+put the correct values in your files for these environments:
+
+f.e:
+
+```
+POSTGRESQL_PASSWORD=123456
+POSTGRESQL_USER=postgres
+```
+
+You can review the coverage in coverage/index.html
+
+Postman doc:
+https://documenter.getpostman.com/view/688876/SW7T7BD9?version=latest#618a7737-b8f5-4681-9137-0893f4286eb7
+
+Postman file import:
+```
+./Tinnova test.postman_collection.json
+```
+ 
