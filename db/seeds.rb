@@ -25,3 +25,15 @@ User.create(name: 'Admin',
 end
 
 puts '=============Created users seeds=================='
+
+puts '=============Create beers seeds==================='
+
+(1..).each do |i|
+  response = Faraday.get("https://api.punkapi.com/v2/beers?per_page=50&page=#{i}")
+  beers_params = JSON.parse(response.body)
+  Beer.import beers_params.map{ |beer_params| beer_params.slice('name', 'tagline', 'description', 'abv') }
+
+  break if beers_params.blank?
+end
+
+puts '=============Created beers seeds==================='

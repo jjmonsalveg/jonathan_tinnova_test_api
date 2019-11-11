@@ -37,6 +37,9 @@ gem 'jwt'
 # Use Active Model Serializers
 gem 'active_model_serializers', '~> 0.10.0'
 
+# bulk insert
+gem 'activerecord-import'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -45,6 +48,12 @@ group :development, :test do
 
   # A library for generating fake data
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+
+  # framework for test
+  gem 'rspec-rails'
+
+  # generate factories for test
+  gem 'factory_bot_rails', '5.1.1'
 end
 
 group :development do
@@ -58,10 +67,6 @@ group :development do
 end
 
 group :test do
-  # framework for test
-  gem 'rspec-rails'
-  # generate factories for test
-  gem 'factory_bot_rails', '5.1.1'
   # code coverage
   gem 'simplecov', require: false
   # custom validators
